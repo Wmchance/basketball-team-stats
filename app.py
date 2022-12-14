@@ -45,7 +45,7 @@ def balance_teams(clean_players_data, teams):
 
 def stats_tool(teams):
     print("Would you like to:\n A. Display a team's stats \n B. Quit the tool \n")
-    user_choice = input("Please enter your choice('A' or 'B') here: ")
+    user_choice = input("Please enter your choice('A' or 'B'): ")
 
     if user_choice.lower() == 'a':
         print('\n')
@@ -98,7 +98,7 @@ def stats_tool(teams):
         print(f"Total players: {num_total_players}")
         print(f"Experienced players: {num_exp_players}")
         print(f"Inexperienced players: {num_inexp_players}")
-        print(f"Avg height: {round(avg_height,2)} inches \n")
+        print(f"Avg player height: {round(avg_height,2)} inches \n")
         print(f"Players by ascending height: \n{', '.join(all_players_names)} \n")
         print(f"Guardians: \n{', '.join(sum(all_guardians_names, []))} \n")
         input("Press any key to continue: \n")
