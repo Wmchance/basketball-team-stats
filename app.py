@@ -65,7 +65,9 @@ def stats_tool(teams):
 
         num_total_players = len(teams[team_choice-1]['experienced_players']) + len(teams[team_choice-1]['inexperienced_players'])
         num_exp_players = len(teams[team_choice-1]['experienced_players'])
+        teams[team_choice-1]['num_experienced_players'] = num_exp_players
         num_inexp_players = len(teams[team_choice-1]['inexperienced_players'])
+        teams[team_choice-1]['num_inexperienced_players'] = num_inexp_players
         
         all_heights = []
         for player in teams[team_choice-1]['experienced_players']:
@@ -73,6 +75,7 @@ def stats_tool(teams):
         for player in teams[team_choice-1]['inexperienced_players']:
             all_heights.append(player['height'])
         avg_height = sum(all_heights)/len(all_heights)
+        teams[team_choice-1]['avg_height'] = avg_height
         
         all_players = []
         for player in teams[team_choice-1]['experienced_players']:
