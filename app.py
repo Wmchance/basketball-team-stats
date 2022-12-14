@@ -66,17 +66,25 @@ def stats_tool(teams):
         num_total_players = len(teams[team_choice-1]['experienced_players']) + len(teams[team_choice-1]['inexperienced_players'])
         num_exp_players = len(teams[team_choice-1]['experienced_players'])
         num_inexp_players = len(teams[team_choice-1]['inexperienced_players'])
+        
         all_heights = []
         for player in teams[team_choice-1]['experienced_players']:
             all_heights.append(player['height'])
         for player in teams[team_choice-1]['inexperienced_players']:
             all_heights.append(player['height'])
         avg_height = sum(all_heights)/len(all_heights)
-        all_players_names = []
+        
+        all_players = []
         for player in teams[team_choice-1]['experienced_players']:
-            all_players_names.append(player['name'])
+            all_players.append(player)
         for player in teams[team_choice-1]['inexperienced_players']:
+            all_players.append(player)
+        # https://www.geeksforgeeks.org/ways-sort-list-dictionaries-values-python-using-lambda-function/
+        all_players_sorted_by_height = sorted(all_players, key=lambda i: i['height'])
+        all_players_names = []
+        for player in all_players_sorted_by_height:
             all_players_names.append(player['name'])
+        
         all_guardians_names = []
         for player in teams[team_choice-1]['experienced_players']:
             all_guardians_names.append(player['guardians'])
@@ -88,7 +96,7 @@ def stats_tool(teams):
         print(f"Experienced players: {num_exp_players}")
         print(f"Inexperienced players: {num_inexp_players}")
         print(f"Avg height: {round(avg_height,2)} inches \n")
-        print(f"Players: \n{', '.join(all_players_names)} \n")
+        print(f"Players by ascending height: \n{', '.join(all_players_names)} \n")
         print(f"Guardians: \n{', '.join(sum(all_guardians_names, []))} \n")
         input("Press any key to continue: \n")
         stats_tool(balanced_teams)
