@@ -30,7 +30,6 @@ def balance_teams(clean_players_data, teams):
         else:
             inexperienced_players.append(player)
 
-    # add try & Exception incase the numbers are not even and an int is not possible. ints are needed so that the new_team calc can be made
     exp_players_per_team = int(len(experienced_players)/num_of_teams)
     inexp_players_per_team = int(len(inexperienced_players)/num_of_teams)
     
@@ -45,15 +44,23 @@ def balance_teams(clean_players_data, teams):
     return balanced_teams
 
 def stats_tool(teams):
-    print("Would you like to:\n A. Display team stats \n B. Quit the tool \n")
+    print("Would you like to:\n A. Display a team's stats \n B. Quit the tool \n")
     user_choice = input("Please enter your choice('A' or 'B') here: ")
 
     if user_choice.lower() == 'a':
         print('\n')
         print('OK, here are the current teams: \n')
+        total_teams_index = []
         for index, team in enumerate(teams, 1):
             print(f"{index}. {team['team_name']}")
-        team_choice = int(input("\nPlease enter the number of the team you would like to see: "))
+            total_teams_index.append(index)
+        try:
+            team_choice = int(input("\nPlease enter the number of the team you would like to see: "))
+            if team_choice not in total_teams_index:
+                raise Exception
+        except Exception:
+            print("Sorry, that isn't an available choice. Please only enter one of the shown numbers\n")
+            stats_tool(balanced_teams)
         print('\n')
 
         num_total_players = len(teams[team_choice-1]['experienced_players']) + len(teams[team_choice-1]['inexperienced_players'])
@@ -83,14 +90,14 @@ def stats_tool(teams):
         print(f"Avg height: {round(avg_height,2)} inches \n")
         print(f"Players: \n{', '.join(all_players_names)} \n")
         print(f"Guardians: \n{', '.join(sum(all_guardians_names, []))} \n")
-    else:
+        input("Press any key to continue: \n")
+        stats_tool(balanced_teams)
+    elif user_choice.lower() == 'b':
         exit("\nSee you next time! \U0001f44b\n")
-    
-    input("Press any key to continue: \n")
-    
-    stats_tool(balanced_teams)
+    else:
+        print("Please choose either 'A' to see a team's stats or 'B' to quit\n")
+        stats_tool(balanced_teams)
 
-    
 
 if __name__ == "__main__":
     clean_players = clean_data(PLAYERS)
