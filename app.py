@@ -44,11 +44,61 @@ def balance_teams(clean_players_data, teams):
 
     return balanced_teams
 
+def stats_tool(teams):
+    print("Would you like to:\n A. Display team stats \n B. Quit the tool \n")
+    user_choice = input("Please enter your choice('A' or 'B') here: ")
+
+    if user_choice.lower() == 'a':
+        print('\n')
+        print('OK, here are the current teams: \n')
+        for index, team in enumerate(teams, 1):
+            print(f"{index}. {team['team_name']}")
+        team_choice = int(input("\nPlease enter the number of the team you would like to see: "))
+        print('\n')
+
+        num_total_players = len(teams[team_choice-1]['experienced_players']) + len(teams[team_choice-1]['inexperienced_players'])
+        num_exp_players = len(teams[team_choice-1]['experienced_players'])
+        num_inexp_players = len(teams[team_choice-1]['inexperienced_players'])
+        all_heights = []
+        for player in teams[team_choice-1]['experienced_players']:
+            all_heights.append(player['height'])
+        for player in teams[team_choice-1]['inexperienced_players']:
+            all_heights.append(player['height'])
+        avg_height = sum(all_heights)/len(all_heights)
+        all_players_names = []
+        for player in teams[team_choice-1]['experienced_players']:
+            all_players_names.append(player['name'])
+        for player in teams[team_choice-1]['inexperienced_players']:
+            all_players_names.append(player['name'])
+        all_guardians_names = []
+        for player in teams[team_choice-1]['experienced_players']:
+            all_guardians_names.append(player['guardians'])
+        for player in teams[team_choice-1]['inexperienced_players']:
+            all_guardians_names.append(player['guardians'])
+
+        print(f"{teams[team_choice-1]['team_name']}' stats: \n----------------")
+        print(f"Total players: {num_total_players}")
+        print(f"Experienced players: {num_exp_players}")
+        print(f"Inexperienced players: {num_inexp_players}")
+        print(f"Avg height: {round(avg_height,2)} inches \n")
+        print(f"Players: \n{', '.join(all_players_names)} \n")
+        print(f"Guardians: \n{', '.join(sum(all_guardians_names, []))} \n")
+    else:
+        exit("\nSee you next time! \U0001f44b\n")
+    
+    input("Press any key to continue: \n")
+    
+    stats_tool(balanced_teams)
+
+    
 
 if __name__ == "__main__":
     clean_players = clean_data(PLAYERS)
     teams_copy = copy.deepcopy(TEAMS)
     
     balanced_teams = balance_teams(clean_players, teams_copy)
-    # print(balanced_teams[0], '\n')
+
+    print('\n')
+    print("\U0001f3C0 Welcome to the basketball team stats tool \U0001f3C0 \n")
+    stats_tool(balanced_teams)
     
